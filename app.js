@@ -7,11 +7,11 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/films/:filmid', (req, res) => {
-  res.send(['Some Film'])
+  res.send([`Suggestions based on filmID ${req.params.seriesid} : [1,2,3]`])
 })
 
 app.get('/api/series/:seriesid', (req, res) => {
-  res.send(['Some Series'])
+  res.send([`Suggestions based on seriesID ${req.params.seriesid} : [1,2,3]`])
 })
 
 app.listen(port, () => {
