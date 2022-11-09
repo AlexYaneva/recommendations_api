@@ -2,12 +2,6 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// http methods
-// app.get();
-// app.post();
-// app.put();
-// app.delete();
-
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
