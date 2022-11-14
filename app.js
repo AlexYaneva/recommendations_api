@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const apiKey = process.env.API_KEY;
+
+let tmdbBaseUrl = "https://api.themoviedb.org/3";
+let seriesPath = "/tv/";
+let filmsPath = "/movie/";
+let language = "&language=en-US";
+let recommendationsPath = "/recommendations";
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
