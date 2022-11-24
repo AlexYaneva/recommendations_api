@@ -24,16 +24,19 @@ router.get("/", (req, res) => {
 router.get("/:filmID", async (req, res) => {
     const { error } = validateFilmId(req.params);
     if(error) {
-        res.status(400).send(error.details[0].message);
+        res.status(400).json(error.details[0].message);
         return;
     }
     try {
         const response = await fetch(`${filmsPath}${req.params.filmID}${recommendationsPath}${apiKey}${language}&page=1`);
         const data = await response.json();
-        // console.log(data);
+        if(data.success = 'false') {
+            res.status(404).json(data.status_message);
+            return;
+        }
         res.json(data);
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
+        console.log(err);
     }
 })
 

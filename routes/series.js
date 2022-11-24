@@ -1,7 +1,7 @@
 const express = require("express");
 const fetch = require("node-fetch");
 const path = require('path');
-const { validatesSeriesId } = require('../validators/paramValidator.js')
+const { validateSeriesId } = require('../validators/paramValidator.js')
 require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
 const router = express.Router()
@@ -24,16 +24,19 @@ router.get("/", (req, res) => {
 router.get("/:seriesID", async (req, res) => {
     const { error } = validateSeriesId(req.params);
     if(error) {
-        res.status(400).send(error.details[0].message);
+        res.status(400).json(error.details[0].message);
         return;
     }
     try {
         const response = await fetch(`${seriesPath}${req.params.seriesID}${recommendationsPath}${apiKey}${language}&page=1`);
         const data = await response.json();
-        // console.log(data);
+        if(data.success = 'false') {
+            res.status(404).json(data.status_message);
+            return;
+        }
         res.json(data);
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
+        console.log(err);
     }
 })
 
